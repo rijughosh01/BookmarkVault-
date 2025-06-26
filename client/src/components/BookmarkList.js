@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import API from "../api";
 
 const CATEGORIES = ["All Categories", "Learning", "Work", "Personal", "Other"];
+
 function BookmarkList() {
   const [bookmarks, setBookmarks] = useState([]);
   const [error, setError] = useState("");
@@ -29,14 +30,14 @@ function BookmarkList() {
     // eslint-disable-next-line
   }, []);
 
-  
+  // Handle search input change
   const handleSearch = (e) => {
     const value = e.target.value;
     setSearch(value);
     fetchBookmarks(value, category);
   };
 
-  
+  // Handle category change
   const handleCategory = (e) => {
     const value = e.target.value;
     setCategory(value);
