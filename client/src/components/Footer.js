@@ -4,7 +4,6 @@ function Footer() {
   return (
     <footer className="bg-[#0a1120] text-white pt-10 pb-4 mt-12">
       <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Left: Logo and Description */}
         <div>
           <div className="flex items-center mb-2">
             <svg
@@ -23,7 +22,8 @@ function Footer() {
             <span className="font-bold text-xl">BookmarkVault</span>
           </div>
           <p className="text-gray-300 mb-4">
-            The ultimate platform for saving and organizing all your important websites in one secure place.
+            The ultimate platform for saving and organizing all your important
+            websites in one secure place.
           </p>
           <div className="flex space-x-4 text-2xl">
             <a href="#" className="hover:text-blue-400" aria-label="Twitter">
@@ -40,24 +40,56 @@ function Footer() {
             </a>
           </div>
         </div>
-        {/* Middle: Product */}
+
         <div>
           <h3 className="font-semibold mb-2">Product</h3>
           <ul className="space-y-1 text-gray-300">
-            <li><a href="#" className="hover:text-white">Features</a></li>
-            <li><a href="#" className="hover:text-white">Pricing</a></li>
-            <li><a href="#" className="hover:text-white">API</a></li>
-            <li><a href="#" className="hover:text-white">Integrations</a></li>
+            <li>
+              <a href="#" className="hover:text-white">
+                Features
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-white">
+                Pricing
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-white">
+                API
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-white">
+                Integrations
+              </a>
+            </li>
           </ul>
         </div>
-        {/* Right: Support */}
+
         <div>
           <h3 className="font-semibold mb-2">Support</h3>
           <ul className="space-y-1 text-gray-300">
-            <li><a href="#" className="hover:text-white">Help Center</a></li>
-            <li><a href="#" className="hover:text-white">Contact Us</a></li>
-            <li><a href="#" className="hover:text-white">Privacy Policy</a></li>
-            <li><a href="#" className="hover:text-white">Terms of Service</a></li>
+            <li>
+              <a href="#" className="hover:text-white">
+                Help Center
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-white">
+                Contact Us
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-white">
+                Privacy Policy
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-white">
+                Terms of Service
+              </a>
+            </li>
           </ul>
         </div>
       </div>

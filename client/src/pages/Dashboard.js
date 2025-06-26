@@ -4,6 +4,12 @@ import BookmarkList from "../components/BookmarkList";
 
 function Dashboard() {
   const [showForm, setShowForm] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+
+  const handleAdd = () => {
+    setShowForm(false);
+    setRefresh((r) => !r);
+  };
 
   return (
     <div className="max-w-3xl mx-auto py-8 px-4">
@@ -21,8 +27,10 @@ function Dashboard() {
           + Add Bookmark
         </button>
       </div>
-      <BookmarkList />
-      {showForm && <BookmarkForm onClose={() => setShowForm(false)} />}
+      <BookmarkList refresh={refresh} />
+      {showForm && (
+        <BookmarkForm onAdd={handleAdd} onClose={() => setShowForm(false)} />
+      )}
     </div>
   );
 }

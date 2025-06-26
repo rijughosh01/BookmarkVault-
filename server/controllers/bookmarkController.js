@@ -2,8 +2,14 @@ const Bookmark = require("../models/bookmark");
 
 exports.createBookmark = async (req, res) => {
   try {
-    const { title, url } = req.body;
-    const bookmark = new Bookmark({ title, url, user: req.user._id });
+    const { title, url, description, category } = req.body;
+    const bookmark = new Bookmark({
+      title,
+      url,
+      description,
+      category,
+      user: req.user._id,
+    });
     await bookmark.save();
     res.status(201).json(bookmark);
   } catch (err) {
@@ -15,14 +21,16 @@ exports.createBookmark = async (req, res) => {
 
 exports.getBookmarks = async (req, res) => {
   try {
-    const { q } = req.query;
+    const { q, category } = req.query;
     const query = { user: req.user._id };
     if (q) {
-      // Case-insensitive search in title or url
       query.$or = [
         { title: { $regex: q, $options: "i" } },
         { url: { $regex: q, $options: "i" } },
       ];
+    }
+    if (category && category !== "All Categories") {
+      query.category = category;
     }
     const bookmarks = await Bookmark.find(query);
     res.json(bookmarks);
@@ -36,10 +44,10 @@ exports.getBookmarks = async (req, res) => {
 exports.updateBookmark = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, url } = req.body;
+    const { title, url, description, category } = req.body;
     const bookmark = await Bookmark.findOneAndUpdate(
       { _id: id, user: req.user._id },
-      { title, url },
+      { title, url, description, category },
       { new: true }
     );
     if (!bookmark) return res.status(404).json({ error: "Bookmark not found" });

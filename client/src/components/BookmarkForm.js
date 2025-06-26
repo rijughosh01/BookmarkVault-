@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import API from "../api";
 
-function BookmarkForm({ onAdd, onClose }) {
-  const [form, setForm] = useState({
-    title: "",
-    url: "",
-    description: "",
-    category: "",
-  });
+const CATEGORIES = ["Learning", "Work", "Personal", "Other"];
+
+function BookmarkForm({ onAdd, onClose, initialData, onUpdate }) {
+  const [form, setForm] = useState(
+    initialData || {
+      title: "",
+      url: "",
+      description: "",
+      category: "",
+    }
+  );
   const [error, setError] = useState("");
 
   const handleChange = (e) =>
@@ -16,16 +20,20 @@ function BookmarkForm({ onAdd, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.post("/bookmarks", {
-        title: form.title,
-        url: form.url,
-      });
+      if (initialData && onUpdate) {
+        // Update mode
+        const res = await API.put(`/bookmarks/${initialData._id}`, form);
+        onUpdate(res.data);
+      } else {
+        // Create mode
+        const res = await API.post("/bookmarks", form);
+        if (onAdd) onAdd(res.data);
+      }
       setForm({ title: "", url: "", description: "", category: "" });
       setError("");
-      if (onAdd) onAdd(res.data);
       if (onClose) onClose();
     } catch (err) {
-      setError(err.response?.data?.error || "Failed to add bookmark");
+      setError(err.response?.data?.error || "Failed to save bookmark");
     }
   };
 
@@ -42,7 +50,9 @@ function BookmarkForm({ onAdd, onClose }) {
         >
           &times;
         </button>
-        <h2 className="text-xl font-bold mb-4">Add Bookmark</h2>
+        <h2 className="text-xl font-bold mb-4">
+          {initialData ? "Edit Bookmark" : "Add Bookmark"}
+        </h2>
         <div className="mb-3">
           <label className="block text-gray-700 mb-1">Website URL</label>
           <input
@@ -85,12 +95,14 @@ function BookmarkForm({ onAdd, onClose }) {
             value={form.category}
             onChange={handleChange}
             className="w-full border rounded px-3 py-2"
+            required
           >
             <option value="">Select category</option>
-            <option value="Learning">Learning</option>
-            <option value="Work">Work</option>
-            <option value="Personal">Personal</option>
-            <option value="Other">Other</option>
+            {CATEGORIES.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
           </select>
         </div>
         <div className="flex gap-2">
@@ -105,7 +117,7 @@ function BookmarkForm({ onAdd, onClose }) {
             type="submit"
             className="flex-1 bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700"
           >
-            Save Bookmark
+            {initialData ? "Update" : "Save Bookmark"}
           </button>
         </div>
         {error && <div className="text-red-500 mt-2">{error}</div>}

@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from "react";
 import API from "../api";
+import BookmarkForm from "./BookmarkForm";
 
 const CATEGORIES = ["All Categories", "Learning", "Work", "Personal", "Other"];
 
-function BookmarkList() {
+function BookmarkList({ refresh }) {
   const [bookmarks, setBookmarks] = useState([]);
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState("All Categories");
+  const [editBookmark, setEditBookmark] = useState(null);
+
+  function getDomain(url) {
+    try {
+      return new URL(url).hostname;
+    } catch {
+      return "";
+    }
+  }
 
   const fetchBookmarks = async (q = "", cat = "All Categories") => {
     setLoading(true);
@@ -28,20 +38,14 @@ function BookmarkList() {
   useEffect(() => {
     fetchBookmarks(search, category);
     // eslint-disable-next-line
-  }, []);
+  }, [refresh, search, category]);
 
-  // Handle search input change
   const handleSearch = (e) => {
-    const value = e.target.value;
-    setSearch(value);
-    fetchBookmarks(value, category);
+    setSearch(e.target.value);
   };
 
-  // Handle category change
   const handleCategory = (e) => {
-    const value = e.target.value;
-    setCategory(value);
-    fetchBookmarks(search, value);
+    setCategory(e.target.value);
   };
 
   const handleDelete = async (id) => {
@@ -53,9 +57,15 @@ function BookmarkList() {
     }
   };
 
+  const handleUpdate = (updated) => {
+    setBookmarks((prev) =>
+      prev.map((b) => (b._id === updated._id ? updated : b))
+    );
+    setEditBookmark(null);
+  };
+
   return (
     <div>
-      {/* Search Bar & Category Filter */}
       <div className="flex items-center gap-3 mb-6">
         <div className="flex-1 relative">
           <span className="absolute left-3 top-2.5 text-gray-400">
@@ -122,31 +132,71 @@ function BookmarkList() {
               key={b._id}
               className="flex items-center justify-between bg-white rounded shadow p-4"
             >
-              <div>
-                <a
-                  href={b.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 font-semibold hover:underline"
-                >
-                  {b.title}
-                </a>
-                <div className="text-gray-500 text-sm">{b.url}</div>
-                {b.category && (
+              <div className="flex items-center gap-3">
+                {/* Favicon */}
+                <img
+                  src={`https://www.google.com/s2/favicons?domain=${getDomain(
+                    b.url
+                  )}&sz=32`}
+                  alt="favicon"
+                  className="w-6 h-6 mr-2 rounded"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "/favicon.ico";
+                  }}
+                />
+                <div>
+                  {/* Title */}
+                  <a
+                    href={b.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 font-semibold hover:underline"
+                  >
+                    {b.title}
+                  </a>
+                  {/* URL */}
+                  <div className="text-gray-500 text-sm">{b.url}</div>
+                  {/* Description */}
+                  <div className="text-gray-700 text-sm mt-1">
+                    {b.description ? (
+                      b.description
+                    ) : (
+                      <span className="italic text-gray-400">
+                        No description
+                      </span>
+                    )}
+                  </div>
+                  {/* Category */}
                   <span className="inline-block mt-1 px-2 py-0.5 text-xs bg-blue-50 text-blue-600 rounded">
-                    {b.category}
+                    {b.category ? b.category : "Uncategorized"}
                   </span>
-                )}
+                </div>
               </div>
-              <button
-                onClick={() => handleDelete(b._id)}
-                className="text-red-500 hover:text-red-700 font-semibold"
-              >
-                Delete
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setEditBookmark(b)}
+                  className="text-blue-500 hover:text-blue-700 font-semibold"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(b._id)}
+                  className="text-red-500 hover:text-red-700 font-semibold"
+                >
+                  Delete
+                </button>
+              </div>
             </li>
           ))}
         </ul>
+      )}
+      {editBookmark && (
+        <BookmarkForm
+          initialData={editBookmark}
+          onClose={() => setEditBookmark(null)}
+          onUpdate={handleUpdate}
+        />
       )}
     </div>
   );
