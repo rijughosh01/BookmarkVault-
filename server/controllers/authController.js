@@ -7,14 +7,25 @@ const generateToken = (user) =>
 exports.register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
+    const existingUser = await User.findOne({
+      $or: [{ username }, { email }],
+    });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ error: "Username or email already exists" });
+    }
+    if (!password || password.length < 6) {
+      return res
+        .status(400)
+        .json({ error: "Password must be at least 6 characters" });
+    }
     const user = new User({ username, email, password });
     await user.save();
     const token = generateToken(user);
     res.status(201).json({ user: { id: user._id, username, email }, token });
   } catch (err) {
-    res
-      .status(400)
-      .json({ error: "Registration failed", details: err.message });
+    res.status(400).json({ error: "Registration failed" });
   }
 };
 

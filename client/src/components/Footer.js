@@ -2,15 +2,15 @@ import React from "react";
 
 function Footer() {
   return (
-    <footer className="bg-[#0a1120] text-white pt-10 pb-4 mt-12">
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="bg-[#0a1120] text-white pt-12 pb-5 mt-16 shadow-inner">
+      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <div className="flex items-center mb-2">
+          <div className="flex items-center mb-3">
             <svg
-              className="w-6 h-6 text-blue-600 mr-2"
+              className="w-7 h-7 text-blue-600 mr-2"
               fill="none"
               stroke="currentColor"
-              strokeWidth={2}
+              strokeWidth={2.5}
               viewBox="0 0 24 24"
             >
               <path
@@ -19,13 +19,15 @@ function Footer() {
                 d="M5 5v14l7-7 7 7V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"
               />
             </svg>
-            <span className="font-bold text-xl">BookmarkVault</span>
+            <span className="font-extrabold text-2xl tracking-tight">
+              BookmarkVault
+            </span>
           </div>
-          <p className="text-gray-300 mb-4">
+          <p className="text-gray-300 mb-4 text-sm">
             The ultimate platform for saving and organizing all your important
             websites in one secure place.
           </p>
-          <div className="flex space-x-4 text-2xl">
+          <div className="flex space-x-4 text-xl">
             <a href="#" className="hover:text-blue-400" aria-label="Twitter">
               <i className="fab fa-twitter"></i>
             </a>
@@ -40,10 +42,9 @@ function Footer() {
             </a>
           </div>
         </div>
-
         <div>
-          <h3 className="font-semibold mb-2">Product</h3>
-          <ul className="space-y-1 text-gray-300">
+          <h3 className="font-semibold mb-3 text-lg">Product</h3>
+          <ul className="space-y-1 text-gray-300 text-sm">
             <li>
               <a href="#" className="hover:text-white">
                 Features
@@ -66,10 +67,9 @@ function Footer() {
             </li>
           </ul>
         </div>
-
         <div>
-          <h3 className="font-semibold mb-2">Support</h3>
-          <ul className="space-y-1 text-gray-300">
+          <h3 className="font-semibold mb-3 text-lg">Support</h3>
+          <ul className="space-y-1 text-gray-300 text-sm">
             <li>
               <a href="#" className="hover:text-white">
                 Help Center
@@ -94,8 +94,8 @@ function Footer() {
         </div>
       </div>
       <hr className="border-gray-700 my-6 max-w-6xl mx-auto" />
-      <div className="text-center text-gray-400 text-sm">
-        © 2024 BookmarkVault. All rights reserved.
+      <div className="text-center text-gray-400 text-xs">
+        © 2025 BookmarkVault. All rights reserved.
       </div>
     </footer>
   );

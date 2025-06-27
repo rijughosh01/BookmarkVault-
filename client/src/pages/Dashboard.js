@@ -12,17 +12,17 @@ function Dashboard() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto py-8 px-4">
-      <div className="flex items-center justify-between mb-6">
+    <div className="max-w-3xl mx-auto py-12 px-4">
+      <div className="flex items-center justify-between mb-10">
         <div>
-          <h2 className="text-2xl font-bold">My Bookmarks</h2>
-          <p className="text-gray-500">
+          <h2 className="text-3xl font-extrabold">My Bookmarks</h2>
+          <p className="text-gray-500 text-lg">
             Manage and organize all your saved websites
           </p>
         </div>
         <button
           onClick={() => setShowForm(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700 transition"
+          className="bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold hover:bg-blue-700 shadow transition"
         >
           + Add Bookmark
         </button>

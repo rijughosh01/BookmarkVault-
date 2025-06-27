@@ -108,16 +108,16 @@ const features = [
 
 function FeaturesSection() {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-20 bg-white">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-10">Features</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <h2 className="text-4xl font-bold text-center mb-12">Features</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
           {features.map((f, i) => (
             <div
               key={i}
-              className="bg-white rounded-lg border border-gray-200 p-6 text-center shadow-sm hover:shadow-md transition"
+              className="bg-white rounded-2xl border border-gray-200 p-8 text-center shadow-md hover:shadow-xl transition"
             >
-              <div className="mb-4">{f.icon}</div>
+              <div className="mb-5">{f.icon}</div>
               <h3 className="text-xl font-semibold mb-2">{f.title}</h3>
               <p className="text-gray-600">{f.desc}</p>
             </div>
