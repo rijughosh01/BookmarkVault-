@@ -1,11 +1,14 @@
 import React, { useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import FeaturesSection from "../components/FeaturesSection";
+import { useAuth } from "../hooks/useAuth";
 
 function Home() {
   const featuresRef = useRef(null);
   const howItWorksRef = useRef(null);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   React.useEffect(() => {
     if (location.hash === "#features" && featuresRef.current) {
@@ -15,6 +18,15 @@ function Home() {
       howItWorksRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [location]);
+
+ 
+  const handleStartSaving = () => {
+    if (user) {
+      navigate("/dashboard");
+    } else {
+      navigate("/register");
+    }
+  };
 
   return (
     <div>
@@ -28,12 +40,12 @@ function Home() {
           organize, search, and access all your saved links from any device.
         </p>
         <div className="flex gap-4">
-          <Link
-            to="/register"
+          <button
+            onClick={handleStartSaving}
             className="bg-blue-600 text-white px-6 py-3 rounded font-semibold hover:bg-blue-700 transition"
           >
             Start Saving Now - It's Free
-          </Link>
+          </button>
           <button className="border border-blue-600 text-blue-600 px-6 py-3 rounded font-semibold hover:bg-blue-50 transition">
             Watch Demo
           </button>
