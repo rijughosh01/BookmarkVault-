@@ -34,10 +34,18 @@ function Footer() {
             <a href="#" className="hover:text-blue-400" aria-label="Facebook">
               <i className="fab fa-facebook"></i>
             </a>
-            <a href="#" className="hover:text-blue-400" aria-label="LinkedIn">
+            <a
+              href="https://www.linkedin.com/in/pritam-ghosh-5a1712244/"
+              className="hover:text-blue-400"
+              aria-label="LinkedIn"
+            >
               <i className="fab fa-linkedin"></i>
             </a>
-            <a href="#" className="hover:text-blue-400" aria-label="GitHub">
+            <a
+              href="https://github.com/rijughosh01"
+              className="hover:text-blue-400"
+              aria-label="GitHub"
+            >
               <i className="fab fa-github"></i>
             </a>
           </div>
